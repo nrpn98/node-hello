@@ -7,10 +7,9 @@ pipeline {
           }
           }
   }
-      stages {
-        stage("List env vars"){
-            steps{
-                sh "printenv | sort"
+    stage("List env vars"){
+          steps{
+            sh "printenv | sort"
 //                 sh "echo ${testvari}"
 //                 sh "echo ${testvari1} | cut -c 1-4"
                 

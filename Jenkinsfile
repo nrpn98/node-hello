@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    IMAGE_TAG=${GIT_COMMIT}
+    IMAGE_TAG="${GIT_COMMIT}"
   }
   stages {
     stage("build") {

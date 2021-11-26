@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    IMAGE_TAG="${GIT_COMMIT}"
+    IMAGE_TAG="${GIT_COMMIT}  | cut -c 1-4"
   }
   stages {
     stage("build") {
@@ -11,7 +11,7 @@ pipeline {
           }
     stage("List env vars"){
           steps{
-            sh "printenv | sort"
+//             sh "printenv | sort"
             sh "echo ${IMAGE_TAG}"
 //            sh "echo ${testvari}"
 //                 sh "echo ${testvari1} | cut -c 1-4"

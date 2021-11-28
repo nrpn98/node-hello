@@ -44,6 +44,8 @@ pipeline {
     agent any
   
     environment {
+	AWS_ACCESS_KEY_ID= ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY= ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_ACCOUNT_ID="197238652507"
         AWS_DEFAULT_REGION="us-east-1" 
         IMAGE_REPO_NAME="demonr"

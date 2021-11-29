@@ -5,7 +5,7 @@ pipeline {
     AWS_ACCOUNT_ID="197238652507"
     AWS_DEFAULT_REGION="us-east-1" 
     IMAGE_REPO_NAME="demonr"
-		IMAGE_TAG_OLD="${GIT_COMMIT}" | cut -c 1-7
+// 		IMAGE_TAG_OLD="${GIT_COMMIT}" 
 		IMAGE_TAG="${GIT_COMMIT}"
     REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"	
   }
@@ -15,7 +15,7 @@ pipeline {
         sh '''
           aws --version
           aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
-       		echo "${IMAGE_TAG_OLD}"
+       		echo "${IMAGE_TAG}" | cut -c 1-7
 			 '''
       }
     }

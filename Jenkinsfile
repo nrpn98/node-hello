@@ -1,21 +1,25 @@
-
 pipeline {
   agent { label "master" }
   environment {
-    AWS_DEFAULT_REGION="us-east-1"
-    THE_BUTLER_SAYS_SO=credentials('access_id')
+	THE_BUTLER_SAYS_SO=credentials('access_id')
+    AWS_ACCOUNT_ID="197238652507"
+    AWS_DEFAULT_REGION="us-east-1" 
+    IMAGE_REPO_NAME="demonr"
+	IMAGE_TAG="${GIT_COMMIT}  | cut -c 1-7"
+    REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"	
   }
   stages {
     stage('Hello') {
       steps {
         sh '''
           aws --version
-          aws ec2 describe-instances
+          aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.co
         '''
       }
     }
   }
 }
+
 
 // pipeline {
 //     agent any

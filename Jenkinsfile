@@ -6,7 +6,8 @@ pipeline {
     AWS_DEFAULT_REGION="us-east-1" 
     IMAGE_REPO_NAME="demonr"
 // 		IMAGE_TAG_OLD="${GIT_COMMIT:0:8}" 
-		IMAGE_TAG="${GIT_COMMIT}"
+// 		IMAGE_TAG="${GIT_COMMIT}"
+	  IMAGE_TAG=$(git rev-parse --short=7 HEAD)
     REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"	
   }
   stages {
@@ -17,9 +18,7 @@ pipeline {
           aws --version
           aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
  		echo "-------"
-		echo "git rev-parse --short=7 HEAD"
-// 		export IMAGE_TAG_NEW=${IMAGE_TAG} | cut -c 1-7
-// 		echo "${IMAGE_TAG_NEW}" | cut -c 1-7
+// 		echo "${IMAGE_TAG}"
 
 			 '''
       }

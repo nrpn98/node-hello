@@ -6,7 +6,7 @@ pipeline {
     AWS_DEFAULT_REGION="us-east-1" 
     IMAGE_REPO_NAME="demonr"
 // 		IMAGE_TAG_OLD="${GIT_COMMIT:0:8}" 
-		IMAGE_TAG="${GIT_COMMIT:0:8}"
+		IMAGE_TAG="${GIT_COMMIT}"
     REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"	
   }
   stages {
@@ -31,7 +31,7 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+          dockerImage = docker.build "${IMAGE_REPO_NAME}:${IMAGE_TAG:0:8}"
         }
       }
     }
@@ -39,8 +39,8 @@ pipeline {
     stage('Pushing to ECR') {
      steps{  
          script {
-                sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG} ${REPOSITORY_URI}:$IMAGE_TAG"
-                sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+                sh "docker tag ${IMAGE_REPO_NAME}:${IMAGE_TAG:0:8} ${REPOSITORY_URI}:$IMAGE_TAG"
+                sh "docker push ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}:${IMAGE_TAG:0:8}"
          }
         }
       }	

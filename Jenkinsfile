@@ -10,18 +10,18 @@ pipeline {
     REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"	
   }
   stages {
-    stage('Hello') {
+	
+    stage('Login into ECR') {
       steps {
-	      IMAGE_TAG_NEW = "${IMAGE_TAG}" | cut -c 1-7
         sh '''
           aws --version
           aws ecr get-login-password --region ${AWS_DEFAULT_REGION} | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
-       		
-		echo "${IMAGE_TAG_NEW}"
 // 		echo "${IMAGE_TAG}" | cut -c 1-7
 			 '''
       }
     }
+	
+    // Cloning Git
 	  stage('Cloning Git') {
     	steps {
       	checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://github.com/sd031/aws_codebuild_codedeploy_nodeJs_demo.git']]])     

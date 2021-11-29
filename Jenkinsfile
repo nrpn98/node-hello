@@ -7,7 +7,7 @@ pipeline {
     IMAGE_REPO_NAME="demonr"
 // 		IMAGE_TAG_OLD="${GIT_COMMIT:0:8}" 
 // 		IMAGE_TAG="${GIT_COMMIT}"
-	  IMAGE_TAG=$(git rev-parse --short=7 HEAD)
+		IMAGE_TAG=${git rev-parse --short=7 HEAD}
     REPOSITORY_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${IMAGE_REPO_NAME}"	
   }
   stages {

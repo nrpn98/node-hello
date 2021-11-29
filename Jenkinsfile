@@ -2,6 +2,7 @@ pipeline {
     agent any
   
     environment {
+		THE_BUTLER_SAYS_SO=credentials('access_id')
         AWS_ACCOUNT_ID="197238652507"
         AWS_DEFAULT_REGION="us-east-1" 
         IMAGE_REPO_NAME="demonr"

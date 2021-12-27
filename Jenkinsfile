@@ -14,8 +14,8 @@ pipeline {
       steps {
         sh '''
           aws --version
-	  whoami
-	  sudo  su jenkins
+	 				whoami
+					hostname
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 197238652507.dkr.ecr.us-east-1.amazonaws.com
 					echo "-------"
 			 '''
